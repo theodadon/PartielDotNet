@@ -16,8 +16,8 @@ public sealed class EfStockService : IStockService
             .Select(p => new Product
             {
                 LegacyId = p.Id,
-                Id = Guid.Empty, // pas utilisé côté legacy, on laisse une valeur neutre
-                Sku = $"SKU-{p.Id}", // neutre si tu en as besoin ailleurs
+                Id = Guid.Empty, 
+                Sku = $"SKU-{p.Id}",
                 Name = p.Name,
                 UnitPrice = p.UnitPrice,
                 StockQuantity = p.StockQuantity
@@ -44,7 +44,6 @@ public sealed class EfStockService : IStockService
     {
         if (quantity <= 0) throw new ArgumentOutOfRangeException(nameof(quantity));
 
-        // "réservation" en DB : on modifie le stock et on SaveChanges
         var p = _db.Products.FirstOrDefault(x => x.Id == id);
         if (p is null) return false;
 
